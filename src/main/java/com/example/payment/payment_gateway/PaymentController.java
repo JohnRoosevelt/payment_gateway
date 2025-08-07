@@ -28,17 +28,6 @@ public class PaymentController {
   })
   @PostMapping
   public ResponseEntity<PaymentResponse> createPayment(@Valid @RequestBody PaymentRequest request) {
-    // Validate paymentMethod
-    if (!request.isValidPaymentMethod()) {
-      return new ResponseEntity<>(new PaymentResponse("", request.getOrderId(), "FAILED",
-          "Unsupported payment method. Only 'A' or 'B' are allowed."), HttpStatus.BAD_REQUEST);
-    }
-
-    if (request.getAmount() == null || request.getAmount() <= 0 || request.getOrderId() == null) {
-      return new ResponseEntity<>(new PaymentResponse("", request.getOrderId(), "FAILED",
-          "Invalid payment request: amount must be positive and order ID is required."), HttpStatus.BAD_REQUEST);
-    }
-
     return new ResponseEntity<>(paymentService.createPayment(request), HttpStatus.OK);
   }
 

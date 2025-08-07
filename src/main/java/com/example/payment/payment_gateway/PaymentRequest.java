@@ -12,7 +12,9 @@ public class PaymentRequest {
   private Double amount;
   @NotBlank(message = "Currency is required")
   private String currency;
+
   @NotBlank(message = "Payment method is required")
+  @ValidPaymentMethod // <-- Add the custom annotation here
   private String paymentMethod;
 
   // Constructors
@@ -53,14 +55,5 @@ public class PaymentRequest {
 
   public String getPaymentMethod() {
     return paymentMethod;
-  }
-
-  public void setPaymentMethod(String paymentMethod) {
-    this.paymentMethod = paymentMethod;
-  }
-
-  // Custom validation method
-  public boolean isValidPaymentMethod() {
-    return "A".equalsIgnoreCase(paymentMethod) || "B".equalsIgnoreCase(paymentMethod);
   }
 }

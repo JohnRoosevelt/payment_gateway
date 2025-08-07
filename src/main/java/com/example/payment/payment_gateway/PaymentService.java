@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PaymentService {
@@ -24,6 +25,7 @@ public class PaymentService {
     return new PaymentResponse(payment.getId(), request.getOrderId(), "PENDING", "Payment created");
   }
 
+  @Transactional
   public PaymentResponse approvePayment(String id, String pin, String otp) {
     Optional<Payment> paymentOpt = paymentRepository.findById(id);
 
@@ -87,7 +89,6 @@ public class PaymentService {
           }
         }
       } else {
-        // 处理未知的支付方式
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid payment method: " + paymentMethod);
       }
 
